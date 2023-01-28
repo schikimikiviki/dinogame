@@ -1,33 +1,115 @@
 body {
-    margin: 0;
-    background-color: #ffffff;
-    display: flex;
-    justify-content: center;
+	margin: 0;
+	background-color: #ffffff;
+	display: flex;
+	justify-content: center;
 
-    font-family: monospace;
-    font-size: 24px;
+	font-family: monospace;
+	font-size: 24px;
 }
 
 #game {
-    position: relative;
-    width: 800px;
-    height: 256px;
-    background-color: #cccccc;
-    overflow: hidden;
+	position: relative;
+	width: 800px;
+	height: 300px;
+	background-color: #cccccc;
+	overflow: hidden;
 }
 
 #dino {
-    position: absolute;
-    width: 32px;
-    height: 64px;
-    left: 64px;
+	position: absolute;
+	width: 32px;
+	height: 64px;
+	left: 64px;
 
-    background-color: #2222ff;
+	background-color: #2222ff;
 }
 
 #score {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 0.2em 0.5em;
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 0.2em 0.5em;
+}
+
+body,
+html {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	height: 600px;
+}
+
+#banner {
+	padding: 12% 0 0;
+	margin: 0 auto;
+	width: 40%;
+	min-width: 388px;
+}
+
+#horizontal-scroll {
+	width: 100%;
+	height: 100%;
+	background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/221620/scroll1.png)
+		repeat-x;
+	-webkit-animation: backgroundScroll 17s linear infinite;
+	animation: backgroundScroll 17s linear infinite;
+	background-color: #9db9da;
+}
+
+#horizontal-scroll2 {
+	width: 100%;
+	height: 100%;
+	background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/221620/scroll2.png)
+		repeat-x;
+	-webkit-animation: backgroundScroll 22s linear infinite;
+	animation: backgroundScroll 22s linear infinite;
+}
+
+#horizontal-scroll3 {
+	width: 100%;
+	height: 50vh;
+	background: url("images/game-background.png");
+	-webkit-animation: backgroundScroll 30s linear infinite;
+	animation: backgroundScroll 30s linear infinite;
+}
+
+@-webkit-keyframes backgroundScroll {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: -800px 0;
+	}
+}
+@keyframes backgroundScroll {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: -800px 0;
+	}
+}
+
+@-webkit-keyframes breathe {
+	0% {
+		text-shadow: 0px 0px 15px #2588f2;
+	}
+	50% {
+		text-shadow: 0px 0px 5px #2588f2;
+	}
+	100% {
+		text-shadow: 0px 0px 25px #2588f2;
+	}
+}
+@keyframes breathe {
+	0% {
+		text-shadow: 0px 0px 15px #000;
+	}
+	50% {
+		text-shadow: 0px 0px 5px #fff;
+	}
+	100% {
+		text-shadow: 0px 0px 15px #000;
+	}
 }
