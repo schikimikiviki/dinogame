@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+
+    font-family: monospace;
+    font-size: 24px;
+}
+
+#game {
+    position: relative;
+    width: 800px;
+    height: 256px;
+    background-color: #cccccc;
+    overflow: hidden;
+}
+
+#dino {
+    position: absolute;
+    width: 32px;
+    height: 64px;
+    left: 64px;
+
+    background-color: #2222ff;
+}
+
+#score {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.2em 0.5em;
+}
