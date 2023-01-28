@@ -118,8 +118,22 @@ html {
 	background-size: contain;
 	background-repeat: no-repeat;
 	position: absolute;
-	animation: move 10s linear infinite;
+	animation: move 3s linear infinite;
 }
+/*
+#cactus2 {
+	z-index: 20;
+	width: 64px;
+	height: 60px;
+	top: 30%;
+	background-image: url("images/cactus2.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	position: absolute;
+	animation: move 5s linear infinite;
+}
+
+*/
 
 @keyframes move {
 	0% {
