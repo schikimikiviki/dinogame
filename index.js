@@ -2,34 +2,44 @@
 const WIDTH = 800;
 const HEIGHT = 256;
 
-const DINO_EL = document.querySelector('#dino');
-const CACTUS = document.querySelector('#cactus');
+const DINO_EL = document.querySelector("#dino");
+const CACTUS = document.querySelector("#cactus");
 
-function main() {}
+function main() {
+	let gameover = true;
+	let score = document.querySelector("#score");
+	score.innerHTML++;
 
-DINO_EL.addEventListener('animationend', function () {
-	DINO_EL.classList.remove('jump');
-});
+	setInterval(function scoreIncrease() {
+		score.innerHTML++;
+	}, 500);
 
-document.addEventListener('keydown', () => {
-	DINO_EL.classList.add('jump');
-});
+	DINO_EL.addEventListener("animationend", function () {
+		DINO_EL.classList.remove("jump");
+	});
 
-function detectCollision() {
-	const DINO_RECT = DINO_EL.getBoundingClientRect();
-	const CACTUS_RECT = CACTUS.getBoundingClientRect();
+	document.addEventListener("keydown", () => {
+		DINO_EL.classList.add("jump");
+	});
 
-	if (
-		DINO_RECT.left < CACTUS_RECT.right &&
-		DINO_RECT.right > CACTUS_RECT.left &&
-		DINO_RECT.top < CACTUS_RECT.bottom &&
-		DINO_RECT.bottom > CACTUS_RECT.top
-	) {
-		console.log('Collision detected!');
+	function detectCollision() {
+		const DINO_RECT = DINO_EL.getBoundingClientRect();
+		const CACTUS_RECT = CACTUS.getBoundingClientRect();
+
+		if (
+			DINO_RECT.left < CACTUS_RECT.right &&
+			DINO_RECT.right > CACTUS_RECT.left &&
+			DINO_RECT.top < CACTUS_RECT.bottom &&
+			DINO_RECT.bottom > CACTUS_RECT.top
+		) {
+			alert("Collision detected!");
+			CACTUS.style.animationPlayState = "paused";
+			clearTimeout(scoreIncrease);
+		}
 	}
-}
 
-// call the detectCollision function on an interval
-setInterval(detectCollision, 100);
+	// call the detectCollision function on an interval
+	setInterval(detectCollision, 100);
+}
 
 main();
