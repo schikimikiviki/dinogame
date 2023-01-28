@@ -2,7 +2,8 @@
 const WIDTH = 800;
 const HEIGHT = 256;
 
-const DINO_EL = document.querySelector("#dino");
+const DINO_EL = document.querySelector('#dino');
+const CACTUS = document.querySelector('#cactus');
 
 function main() {}
 
@@ -14,17 +15,21 @@ document.addEventListener('keydown', () => {
 	DINO_EL.classList.add('jump');
 });
 
-// document.addEventListener('keydown', (event) => {
-// 	if (event.code === 'Space') {
-// 		DINO_EL.style.bottom = parseInt(DINO_EL.style.bottom || 40) + 100 + 'px';
-// 		console.log('hi');
-// 	}
-// });
+function detectCollision() {
+	const DINO_RECT = DINO_EL.getBoundingClientRect();
+	const CACTUS_RECT = CACTUS.getBoundingClientRect();
 
-// document.addEventListener('keyup', (event) => {
-// 	if (event.code === 'Space' && DINO_EL.style.bottom === '140px') {
-// 		DINO_EL.style.bottom = parseInt(DINO_EL.style.bottom) - 100 + 'px';
-// 	}
-// });
+	if (
+		DINO_RECT.left < CACTUS_RECT.right &&
+		DINO_RECT.right > CACTUS_RECT.left &&
+		DINO_RECT.top < CACTUS_RECT.bottom &&
+		DINO_RECT.bottom > CACTUS_RECT.top
+	) {
+		console.log('Collision detected!');
+	}
+}
+
+// call the detectCollision function on an interval
+setInterval(detectCollision, 100);
 
 main();
