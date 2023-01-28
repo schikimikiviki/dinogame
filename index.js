@@ -2,7 +2,7 @@
 const WIDTH = 800;
 const HEIGHT = 256;
 
-const DINO_EL = document.querySelector('#dino');
+const DINO_EL = document.querySelector("#dino");
 
 function main() {}
 
