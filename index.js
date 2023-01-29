@@ -7,11 +7,13 @@ const CACTUS = document.querySelector('#cactus');
 const NEW_GAME_BUTTON = document.querySelector('#new-game');
 const SCORE = document.querySelector('#score');
 
-const scoreIncrease = setInterval(function () {
-	if (CACTUS.style.animationPlayState === 'running') {
-		SCORE.innerHTML++;
-	}
-}, 500);
+const scoreIncrease = () => {
+	setInterval(function () {
+		if (CACTUS.style.animationPlayState === 'running') {
+			SCORE.innerHTML++;
+		}
+	}, 500);
+};
 
 function main() {
 	DINO_EL.addEventListener('animationend', function () {
@@ -37,6 +39,7 @@ function main() {
 		) {
 			alert('Collision detected!');
 			CACTUS.style.animationPlayState = 'paused';
+			SCORE.innerHTML = 0;
 			clearInterval(scoreIncrease);
 		}
 	}
@@ -48,8 +51,6 @@ main();
 
 NEW_GAME_BUTTON.addEventListener('click', () => {
 	CACTUS.style.animationPlayState = 'running';
-	SCORE.innerHTML = 0;
-	setInterval(function () {
-		SCORE.innerHTML++;
-	}, 500);
+	// SCORE.innerHTML = 0;
+	scoreIncrease();
 });
