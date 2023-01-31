@@ -5,15 +5,21 @@ const HEIGHT = 256;
 const DINO_EL = document.querySelector("#dino");
 const CACTUS = document.querySelector("#cactus");
 const NEW_GAME_BUTTON = document.querySelector("#new-game");
-const SCORE = document.querySelector("#score");
 
-const scoreIncrease = setInterval(function () {
-	if (CACTUS.style.animationPlayState === "running") {
-		SCORE.innerHTML++;
-	}
-}, 500);
+let score = 0;
+let gameRunning = true;
 
 function main() {
+	let score = document.querySelector("#score");
+	score.innerHTML++;
+
+	CACTUS.style.animationPlayState = "running";
+	requestAnimationFrame(incrementScore);
+
+	// const scoreIncrease = setInterval(function () {
+	// 	score.innerHTML++;
+	// }, 500);
+
 	DINO_EL.addEventListener("animationend", function () {
 		DINO_EL.classList.remove("jump");
 	});
@@ -32,9 +38,10 @@ function main() {
 			DINO_RECT.top < CACTUS_RECT.bottom &&
 			DINO_RECT.bottom > CACTUS_RECT.top
 		) {
-			alert("Collision detected!");
+			//alert("Collision detected!");
 			CACTUS.style.animationPlayState = "paused";
-			clearInterval(scoreIncrease);
+			gameRunning = false;
+			//clearTimeout(scoreIncrease);
 		}
 	}
 
@@ -44,10 +51,11 @@ function main() {
 
 main();
 
-NEW_GAME_BUTTON.addEventListener("click", () => {
-	CACTUS.style.animationPlayState = "running";
-	SCORE.innerHTML = 0;
-	setInterval(function () {
-		SCORE.innerHTML++;
-	}, 500);
-});
+function incrementScore() {
+	if (!gameRunning) return;
+	score++;
+	document.getElementById("score").innerHTML = score;
+	requestAnimationFrame(incrementScore);
+}
+
+requestAnimationFrame(incrementScore);
