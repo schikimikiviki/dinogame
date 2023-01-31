@@ -45,6 +45,9 @@ function main() {
 	}
 	let highscore = document.querySelector("#highscore");
 	highscore.innerHTML = SCORE.innerHTML;
+	localStorage.setItem("HS", JSON.stringify(highscore.innerHTML));
+	//console.log(HS);
+	highscore.innerHTML = JSON.parse(window.localStorage.getItem("HS"));
 
 	setInterval(detectCollision, 100);
 }
