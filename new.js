@@ -6,6 +6,9 @@ const DINO_EL = document.querySelector('#dino');
 const CACTUS = document.querySelector('#cactus');
 const NEW_GAME_BUTTON = document.querySelector('#new-game');
 const SCORE = document.querySelector('#score');
+const DINO_EL = document.querySelector("#dino");
+const CACTUS = document.querySelector("#cactus");
+const NEW_GAME_BUTTON = document.querySelector("#new-game");
 
 const scoreIncrease = () => {
 	setInterval(function () {
@@ -14,10 +17,24 @@ const scoreIncrease = () => {
 		}
 	}, 500);
 };
+let score = 0;
+let gameRunning = true;
 
 function main() {
 	DINO_EL.addEventListener('animationend', function () {
 		DINO_EL.classList.remove('jump');
+	let score = document.querySelector("#score");
+	score.innerHTML++
+
+	CACTUS.style.animationPlayState = "running");
+	requestAnimationFrame(incrementScore);
+
+	// const scoreIncrease = setInterval(function () {
+	// 	score.innerHTML++;
+	// }, 500);
+
+	DINO_EL.addEventListener("animationend", function () {
+		DINO_EL.classList.remove("jump");
 	});
 
 	document.addEventListener('keydown', () => {
@@ -37,19 +54,11 @@ function main() {
 			DINO_RECT.top < CACTUS_RECT.bottom &&
 			DINO_RECT.bottom > CACTUS_RECT.top
 		) {
-			alert('Collision detected!');
-			CACTUS.style.animationPlayState = 'paused';
-			SCORE.innerHTML = 0;
+			alert("Collision detected!");
+			CACTUS.style.animationPlayState = "paused";
 			clearInterval(scoreIncrease);
-			localStorage.setItem('highscore', `HIGH SCORE: ${SCORE.innerHTML}`);
-			console.log(localStorage.getItem('highscore'));
 		}
 	}
-	let highscore = document.querySelector('#highscore');
-	highscore.innerHTML = SCORE.innerHTML;
-	localStorage.setItem('HS', JSON.stringify(highscore.innerHTML));
-	//console.log(HS);
-	highscore.innerHTML = JSON.parse(window.localStorage.getItem('HS'));
 
 	setInterval(detectCollision, 100);
 }
@@ -60,6 +69,4 @@ NEW_GAME_BUTTON.addEventListener('click', () => {
 	CACTUS.style.animationPlayState = 'running';
 	clearInterval(scoreIncrease);
 	scoreIncrease();
-	document.getElementById('high-score').innerHTML =
-		localStorage.getItem('highscore');
 });

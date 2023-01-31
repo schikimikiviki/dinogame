@@ -131,3 +131,7 @@ html {
 		top: 75%;
 	}
 }
+
+.hidden {
+	visibility: hidden;
+}
