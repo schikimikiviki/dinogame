@@ -51,6 +51,6 @@ main();
 
 NEW_GAME_BUTTON.addEventListener('click', () => {
 	CACTUS.style.animationPlayState = 'running';
-	// SCORE.innerHTML = 0;
+	clearInterval(scoreIncrease);
 	scoreIncrease();
 });
