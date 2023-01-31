@@ -2,7 +2,7 @@
 const WIDTH = 800;
 const HEIGHT = 256;
 
-const DINO_EL = document.querySelector('#dino');
+let DINO_EL = document.querySelector('#dino');
 const CACTUS = document.querySelector('#cactus');
 const NEW_GAME_BUTTON = document.querySelector('#new-game');
 const SCORE = document.querySelector('#score');
@@ -63,7 +63,7 @@ function main() {
 	setInterval(detectCollision, 100);
 }
 
-main();
+
 
 NEW_GAME_BUTTON.addEventListener('click', () => {
 	CACTUS.style.animationPlayState = 'running';
