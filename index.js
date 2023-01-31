@@ -2,14 +2,27 @@
 const WIDTH = 800;
 const HEIGHT = 256;
 
+const DINO_EL = document.querySelector('#dino');
+const CACTUS = document.querySelector('#cactus');
+const NEW_GAME_BUTTON = document.querySelector('#new-game');
+const SCORE = document.querySelector('#score');
 const DINO_EL = document.querySelector("#dino");
 const CACTUS = document.querySelector("#cactus");
 const NEW_GAME_BUTTON = document.querySelector("#new-game");
 
+const scoreIncrease = () => {
+	setInterval(function () {
+		if (CACTUS.style.animationPlayState === 'running') {
+			SCORE.innerHTML++;
+		}
+	}, 500);
+};
 let score = 0;
 let gameRunning = true;
 
 function main() {
+	DINO_EL.addEventListener('animationend', function () {
+		DINO_EL.classList.remove('jump');
 	let score = document.querySelector("#score");
 	score.innerHTML++;
 
@@ -24,8 +37,11 @@ function main() {
 		DINO_EL.classList.remove("jump");
 	});
 
-	document.addEventListener("keydown", () => {
-		DINO_EL.classList.add("jump");
+	document.addEventListener('keydown', () => {
+		DINO_EL.classList.add('jump');
+	});
+	document.addEventListener('keydown', () => {
+		DINO_EL.classList.add('jump');
 	});
 
 	function detectCollision() {
@@ -38,24 +54,19 @@ function main() {
 			DINO_RECT.top < CACTUS_RECT.bottom &&
 			DINO_RECT.bottom > CACTUS_RECT.top
 		) {
-			//alert("Collision detected!");
+			alert("Collision detected!");
 			CACTUS.style.animationPlayState = "paused";
-			gameRunning = false;
-			//clearTimeout(scoreIncrease);
+			clearInterval(scoreIncrease);
 		}
 	}
 
-	// call the detectCollision function on an interval
 	setInterval(detectCollision, 100);
 }
 
 main();
 
-function incrementScore() {
-	if (!gameRunning) return;
-	score++;
-	document.getElementById("score").innerHTML = score;
-	requestAnimationFrame(incrementScore);
-}
-
-requestAnimationFrame(incrementScore);
+NEW_GAME_BUTTON.addEventListener('click', () => {
+	CACTUS.style.animationPlayState = 'running';
+	clearInterval(scoreIncrease);
+	scoreIncrease();
+});
