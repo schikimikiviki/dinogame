@@ -2,29 +2,46 @@
 const WIDTH = 800;
 const HEIGHT = 256;
 
+const DINO_EL = document.querySelector('#dino');
+const CACTUS = document.querySelector('#cactus');
+const NEW_GAME_BUTTON = document.querySelector('#new-game');
+const SCORE = document.querySelector('#score');
 const DINO_EL = document.querySelector("#dino");
 const CACTUS = document.querySelector("#cactus");
 const NEW_GAME_BUTTON = document.querySelector("#new-game");
-const SCORE = document.querySelector("#score");
 
 const scoreIncrease = () => {
 	setInterval(function () {
-		if (CACTUS.style.animationPlayState === "running") {
+		if (CACTUS.style.animationPlayState === 'running') {
 			SCORE.innerHTML++;
 		}
 	}, 500);
 };
+let score = 0;
+let gameRunning = true;
 
 function main() {
+	DINO_EL.addEventListener('animationend', function () {
+		DINO_EL.classList.remove('jump');
+	let score = document.querySelector("#score");
+	score.innerHTML++
+
+	CACTUS.style.animationPlayState = "running");
+	requestAnimationFrame(incrementScore);
+
+	// const scoreIncrease = setInterval(function () {
+	// 	score.innerHTML++;
+	// }, 500);
+
 	DINO_EL.addEventListener("animationend", function () {
 		DINO_EL.classList.remove("jump");
 	});
 
-	document.addEventListener("keydown", () => {
-		DINO_EL.classList.add("jump");
+	document.addEventListener('keydown', () => {
+		DINO_EL.classList.add('jump');
 	});
-	document.addEventListener("keydown", () => {
-		DINO_EL.classList.add("jump");
+	document.addEventListener('keydown', () => {
+		DINO_EL.classList.add('jump');
 	});
 
 	function detectCollision() {
@@ -39,20 +56,17 @@ function main() {
 		) {
 			alert("Collision detected!");
 			CACTUS.style.animationPlayState = "paused";
-			SCORE.innerHTML = 0;
 			clearInterval(scoreIncrease);
 		}
 	}
-	let highscore = document.querySelector("#highscore");
-	highscore.innerHTML = SCORE.innerHTML;
 
 	setInterval(detectCollision, 100);
 }
 
 main();
 
-NEW_GAME_BUTTON.addEventListener("click", () => {
-	CACTUS.style.animationPlayState = "running";
+NEW_GAME_BUTTON.addEventListener('click', () => {
+	CACTUS.style.animationPlayState = 'running';
 	clearInterval(scoreIncrease);
 	scoreIncrease();
 });
