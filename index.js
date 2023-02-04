@@ -60,8 +60,17 @@ function main() {
 	function updateCollisionDetection() {
 		dinoRect = DINO_EL.getBoundingClientRect();
 		cactusRect = CACTUS.getBoundingClientRect();
+	let dinoRect, cactusRect;
+
+	function updateCollisionDetection() {
+		dinoRect = DINO_EL.getBoundingClientRect();
+		cactusRect = CACTUS.getBoundingClientRect();
 
 		if (
+			dinoRect.left < cactusRect.right &&
+			dinoRect.right > cactusRect.left &&
+			dinoRect.top < cactusRect.bottom &&
+			dinoRect.bottom > cactusRect.top
 			dinoRect.left < cactusRect.right &&
 			dinoRect.right > cactusRect.left &&
 			dinoRect.top < cactusRect.bottom &&
@@ -72,9 +81,15 @@ function main() {
 
 		if (!gameOver) {
 			requestAnimationFrame(updateCollisionDetection);
+			endGame();
+		}
+
+		if (!gameOver) {
+			requestAnimationFrame(updateCollisionDetection);
 		}
 	}
 
+	requestAnimationFrame(updateCollisionDetection);
 	requestAnimationFrame(updateCollisionDetection);
 }
 
