@@ -1,4 +1,3 @@
-// The size of our game area
 const WIDTH = 800;
 const HEIGHT = 256;
 
@@ -6,16 +5,45 @@ const DINO_EL = document.querySelector('#dino');
 const CACTUS = document.querySelector('#cactus');
 const NEW_GAME_BUTTON = document.querySelector('#new-game');
 const SCORE = document.querySelector('#score');
+let highscoreDiv = document.querySelector('#highscore');
+let highestScoreOfAll = 0;
 
-const scoreIncrease = () => {
-	setInterval(function () {
-		if (CACTUS.style.animationPlayState === 'running') {
-			SCORE.innerHTML++;
-		}
-	}, 500);
-};
+let score = 0;
+let gameOver = false;
+
+console.log('this is the local storage at start', localStorage.getItem('HS'));
+
+function updateScore() {
+	if (gameOver) {
+		return;
+	}
+
+	score++;
+	SCORE.innerHTML = score;
+	requestAnimationFrame(updateScore);
+}
+
+function endGame() {
+	gameOver = true;
+	alert('Game over, loser!');
+	CACTUS.style.animationPlayState = 'paused';
+
+	let newScore = parseInt(SCORE.innerHTML);
+
+	if (newScore > highestScoreOfAll) {
+		localStorage.setItem('HS', newScore);
+		highestScoreOfAll = newScore;
+		console.log('this should be the updated high score:', highestScoreOfAll);
+		highscoreDiv.innerHTML = highestScoreOfAll;
+		return highestScoreOfAll;
+	}
+}
+
+requestAnimationFrame(updateScore);
 
 function main() {
+	highscoreDiv.innerHTML = highestScoreOfAll;
+
 	DINO_EL.addEventListener('animationend', function () {
 		DINO_EL.classList.remove('jump');
 	});
@@ -27,39 +55,31 @@ function main() {
 		DINO_EL.classList.add('jump');
 	});
 
-	function detectCollision() {
-		const DINO_RECT = DINO_EL.getBoundingClientRect();
-		const CACTUS_RECT = CACTUS.getBoundingClientRect();
+	let dinoRect, cactusRect;
+
+	function updateCollisionDetection() {
+		dinoRect = DINO_EL.getBoundingClientRect();
+		cactusRect = CACTUS.getBoundingClientRect();
 
 		if (
-			DINO_RECT.left < CACTUS_RECT.right &&
-			DINO_RECT.right > CACTUS_RECT.left &&
-			DINO_RECT.top < CACTUS_RECT.bottom &&
-			DINO_RECT.bottom > CACTUS_RECT.top
+			dinoRect.left < cactusRect.right &&
+			dinoRect.right > cactusRect.left &&
+			dinoRect.top < cactusRect.bottom &&
+			dinoRect.bottom > cactusRect.top
 		) {
-			alert('Collision detected!');
-			CACTUS.style.animationPlayState = 'paused';
-			SCORE.innerHTML = 0;
-			clearInterval(scoreIncrease);
-			localStorage.setItem('highscore', `HIGH SCORE: ${SCORE.innerHTML}`);
-			console.log(localStorage.getItem('highscore'));
+			endGame();
+		}
+
+		if (!gameOver) {
+			requestAnimationFrame(updateCollisionDetection);
 		}
 	}
-	let highscore = document.querySelector('#highscore');
-	highscore.innerHTML = SCORE.innerHTML;
-	localStorage.setItem('HS', JSON.stringify(highscore.innerHTML));
-	//console.log(HS);
-	highscore.innerHTML = JSON.parse(window.localStorage.getItem('HS'));
 
-	setInterval(detectCollision, 100);
+	requestAnimationFrame(updateCollisionDetection);
 }
 
 main();
 
 NEW_GAME_BUTTON.addEventListener('click', () => {
-	CACTUS.style.animationPlayState = 'running';
-	clearInterval(scoreIncrease);
-	scoreIncrease();
-	document.getElementById('high-score').innerHTML =
-		localStorage.getItem('highscore');
+	window.location.reload();
 });
