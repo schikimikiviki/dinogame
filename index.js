@@ -11,6 +11,8 @@ let highestScoreOfAll = 0;
 let score = 0;
 let gameOver = false;
 
+console.log(localStorage.getItem("HS"));
+
 function updateScore() {
 	if (gameOver) {
 		return;
@@ -22,33 +24,34 @@ function updateScore() {
 }
 
 function endGame() {
+	gameOver = true;
 	alert("Game over, loser!");
 	CACTUS.style.animationPlayState = "paused";
 
-	localStorage.setItem("HS", JSON.stringify(SCORE.innerHTML));
+	//localStorage.setItem("HS", JSON.stringify(SCORE.innerHTML));
 
-	let newScore = JSON.parse(localStorage.getItem("HS"));
-	newScore = parseInt(newScore);
+	let newScore = score;
+	//newScore = parseInt(newScore);
 
-	console.log(typeof highestScoreOfAll, highestScoreOfAll);
-	console.log(typeof newScore, newScore);
+	console.log("Highest is" + highestScoreOfAll);
+	console.log("new score is" + newScore);
 
 	if (newScore > highestScoreOfAll) {
+		localStorage.setItem("HS", newScore);
 		highestScoreOfAll = newScore;
 		highscoreDiv.innerHTML = highestScoreOfAll;
-	} else {
-		highscoreDiv.innerHTML = highestScoreOfAll;
+		return highestScoreOfAll;
 	}
-
-	gameOver = true;
-	return highestScoreOfAll;
+	console.log(highestScoreOfAll);
 }
 
-// Start the animation frame loop
 requestAnimationFrame(updateScore);
 
+//localStorage.setItem("HS", JSON.stringify(SCORE.innerHTML));
+
 function main() {
-	SCORE.innerHTML = 0;
+	console.log(JSON.parse(localStorage.getItem("HS")));
+	//SCORE.innerHTML = 0;
 	highscoreDiv.innerHTML = highestScoreOfAll;
 
 	DINO_EL.addEventListener("animationend", function () {
